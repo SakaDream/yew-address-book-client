@@ -1,7 +1,7 @@
 [package]
-name = "yew-wasm-pack-template"
-version = "0.2.0"
-authors = ["Yew Maintainers <maintainers@yew.rs"]
+name = "yew-address-book-client"
+version = "0.1.0"
+authors = ["SakaDream <bahaimt@gmail.com>"]
 edition = "2018"
 
 [lib]
@@ -9,20 +9,20 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 log = "0.4"
-strum = "0.17"
-strum_macros = "0.17"
+strum = "0.18.0"
+strum_macros = "0.18.0"
 serde = "1"
 serde_derive = "1"
-wasm-bindgen = "0.2.58"
+wasm-bindgen = "0.2.64"
 wasm-logger = "0.2"
-wee_alloc = { version = "0.4.4", optional = true }
-yew = "0.15"
+wee_alloc = { version = "0.4.5", optional = true }
+yew = "0.17.2"
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3"
 
 [dependencies.web-sys]
-version = "0.3.4"
+version = "0.3.41"
 features = [
   'KeyboardEvent',
 ]
