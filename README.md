@@ -2,30 +2,25 @@
 
 An Address Book frontend using yew
 
-## 🚴 Usage
+## Require
 
-### 🛠️ Build
+- [Rust Stable](https://rustup.rs)
+- [NodeJS](https://nodejs.org)
+- [Yarn](https://yarnpkg.com)
 
-When building for the first time, ensure to install dependencies first.
+Or using [Docker](https://www.docker.com)
 
-```
-yarn install
-```
+## How to run
 
-```
-yarn run build
-```
+### Manual
 
-### 🔬 Serve locally
+- Install Node dependencies: `yarn install`
+- Build: `yarn run build`
+- Run: `yarn run start:dev`
+- Go to http://localhost:8000 (Windows) or http://127.0.0.1:8000 (Linux/macOS) and enjoy! 😄
 
-```
-yarn run start:dev
-```
+### Docker
 
-
-## 🔋 Batteries Included
-
-* [`wasm-bindgen`](https://github.com/rustwasm/wasm-bindgen) for communicating
-  between WebAssembly and JavaScript.
-* [`wee_alloc`](https://github.com/rustwasm/wee_alloc), an allocator optimized
-  for small code size.
+- Build: `docker build -t adress-book .`
+- Run: `docker run -p 8000 -d address-book`
+- Go to http://localhost:8000 (Windows) or http://127.0.0.1:8000 (Linux/macOS) and enjoy! 😄
