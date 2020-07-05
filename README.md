@@ -21,6 +21,6 @@ Or using [Docker](https://www.docker.com)
 
 ### Docker
 
-- Build: `docker build -t adress-book .`
+- Build: `docker build -t address-book .`
 - Run: `docker run -p 8000 -d address-book`
 - Go to http://localhost:8000 (Windows) or http://127.0.0.1:8000 (Linux/macOS) and enjoy! 😄
