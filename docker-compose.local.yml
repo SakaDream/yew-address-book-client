@@ -1,8 +1,0 @@
-version: '3'
-services:
-  app:
-    container_name: address_book_fe
-    build: .
-    restart: always
-    ports:
-    - "80:80"
