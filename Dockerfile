@@ -20,7 +20,7 @@ RUN yarn install \
     && rm static/*.*
 
 # expose port
-EXPOSE 8080
+EXPOSE 8000
 
-# run the binary
-ENTRYPOINT ["./miniserve", "/dist", "--index", "index.html"]
+# run the server
+ENTRYPOINT ["python3", "-m", "http.server", "-d", "dist", "8000"]
