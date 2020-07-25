@@ -1,15 +1,12 @@
 use yew::{Component, ComponentLink, Html, html};
-use crate::{
-    common::constraint,
-    layout::Footer,
-};
+use crate::pages::hello_world::HelloWorld;
 
-impl Component for Footer {
+impl Component for HelloWorld {
     type Message = ();
     type Properties = ();
 
     fn create(_props: Self::Properties, _link: ComponentLink<Self>) -> Self {
-        Footer { _link }
+        HelloWorld { _link }
     }
 
     fn update(&mut self, _msg: Self::Message) -> bool {
@@ -22,11 +19,9 @@ impl Component for Footer {
 
     fn view(&self) -> Html {
         html! {
-            <footer class="footer mt-auto py-3 bg-light">
-                <div class="container">
-                    <span class="text-muted">{ constraint::COPYRIGHT }</span>
-                </div>
-            </footer>
+            <>
+                <h1>{ "Hello World!" }</h1>
+            </>
         }
     }
 }
