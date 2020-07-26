@@ -1,12 +1,14 @@
 use yew::{Component, ComponentLink, Html, html};
-use crate::components::hello_world::HelloWorld;
+use crate::{
+    shared::{constraint, layout::Header},
+};
 
-impl Component for HelloWorld {
+impl Component for Header {
     type Message = ();
     type Properties = ();
 
     fn create(_props: Self::Properties, _link: ComponentLink<Self>) -> Self {
-        HelloWorld { _link }
+        Header { _link }
     }
 
     fn update(&mut self, _msg: Self::Message) -> bool {
@@ -19,9 +21,13 @@ impl Component for HelloWorld {
 
     fn view(&self) -> Html {
         html! {
-            <>
-                <h1>{ "Hello World!" }</h1>
-            </>
+            <header>
+                <nav class="navbar navbar-expand navbar-dark bg-dark">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">{ constraint::APP_NAME }</a>
+                    </div>
+                </nav>
+            </header>
         }
     }
 }

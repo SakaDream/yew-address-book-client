@@ -1,10 +1,9 @@
 #![recursion_limit = "512"]
 
 mod app;
-mod layout;
-mod common;
-mod components;
-mod models;
+mod shared;
+mod pages;
+mod routes;
 
 use wasm_bindgen::prelude::*;
 

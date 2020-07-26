@@ -1,59 +1,71 @@
-use yew::{
-    Component, ComponentLink, html,
-    virtual_dom::VNode,
-};
-use yew_router::{
-    prelude::*,
-    Switch,
-    switch::Permissive,
-};
-use crate::layout::{Header, Footer};
-use crate::components::{
-    hello_world::HelloWorld,
+use yew::{agent::Bridged, Bridge, Component, ComponentLink, Html, html};
+use yew_router::prelude::*;
+use crate::{
+    shared::layout::{Header, Footer},
+    pages::{
+        hello_world::HelloWorld,
+        page_not_found::PageNotFound,
+    },
+    routes::*,
 };
 
-#[derive(Switch, Debug, Clone)]
-pub enum AppRoute {
-    #[to = "/"]
-    HelloWorld,
-    #[to = "/page-not-found"]
-    PageNotFound(Permissive<String>),
+pub struct App {
+    #[allow(unused)]
+    link: ComponentLink<Self>,
+    current_route: Option<AppRoute>,
+    #[allow(unused)]
+    router_agent: Box<dyn Bridge<RouteAgent>>,
 }
 
-pub struct App {}
+pub enum Msg {
+    UpdateRoute(Route)
+}
 
 impl Component for App {
-    type Message = ();
+    type Message = Msg;
     type Properties = ();
 
-    fn create(_: Self::Properties, _: ComponentLink<Self>) -> Self {
-        App {}
+    fn create(_: Self::Properties, link: ComponentLink<Self>) -> Self {
+        let router_agent = RouteAgent::bridge(link.callback(Msg::UpdateRoute));
+        let route_service: RouteService = RouteService::new();
+        let mut route = route_service.get_route();
+        App {
+            link,
+            current_route: Some(switch(&mut route)),
+            router_agent,
+        }
     }
 
-    fn update(&mut self, _: Self::Message) -> bool {
+    fn update(&mut self, msg: Self::Message) -> bool {
+        match msg {
+            Msg::UpdateRoute(mut route) => {
+                self.current_route = Some(switch(&mut route))
+            }
+        }
         true
     }
 
     fn change(&mut self, _: Self::Properties) -> yew::ShouldRender {
-        true
+        false
     }
 
-    fn view(&self) -> VNode {
+    fn view(&self) -> Html {
         html! {
             <>
                 <Header />
                 <main class="flex-shrink-0 mt-3">
                     <div class="container-fluid">
-                        <Router<AppRoute>
-                            render = Router::render(|switch: AppRoute| {
-                                match switch {
+                        {
+                            if let Some(route) = &self.current_route {
+                                match route {
+                                    AppRoute::Index => html!{<HelloWorld />},
                                     AppRoute::HelloWorld => html!{<HelloWorld />},
-                                    AppRoute::PageNotFound(Permissive(None)) => html!{<h1>{ "404 Not Found" }</h1>},
-                                    AppRoute::PageNotFound(Permissive(Some(missed_route))) => html!{<h1>{ "404 Not Found" }</h1>},
-                                    _ => html!{<h1>{ "404 Not Found" }</h1>},
+                                    AppRoute::PageNotFound | _ => html!{<PageNotFound />},
                                 }
-                            })
-                        />
+                            } else {
+                                html!{<PageNotFound />}
+                            }
+                        }
                     </div>
                 </main>
                 <Footer />

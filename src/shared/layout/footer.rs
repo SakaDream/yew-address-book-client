@@ -1,15 +1,14 @@
 use yew::{Component, ComponentLink, Html, html};
 use crate::{
-    common::constraint,
-    layout::Header,
+    shared::{constraint, layout::Footer},
 };
 
-impl Component for Header {
+impl Component for Footer {
     type Message = ();
     type Properties = ();
 
     fn create(_props: Self::Properties, _link: ComponentLink<Self>) -> Self {
-        Header { _link }
+        Footer { _link }
     }
 
     fn update(&mut self, _msg: Self::Message) -> bool {
@@ -22,13 +21,11 @@ impl Component for Header {
 
     fn view(&self) -> Html {
         html! {
-            <header>
-                <nav class="navbar navbar-expand navbar-dark bg-dark">
-                    <div class="container-fluid">
-                        <a class="navbar-brand" href="#">{ constraint::APP_NAME }</a>
-                    </div>
-                </nav>
-            </header>
+            <footer class="footer mt-auto py-3 bg-light">
+                <div class="container">
+                    <span class="text-muted">{ constraint::COPYRIGHT }</span>
+                </div>
+            </footer>
         }
     }
 }
