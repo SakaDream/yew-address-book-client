@@ -3,6 +3,7 @@
 mod app;
 mod shared;
 mod pages;
+mod routes;
 
 use wasm_bindgen::prelude::*;
 
