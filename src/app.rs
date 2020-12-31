@@ -58,6 +58,7 @@ impl Component for App {
                         {
                             if let Some(route) = &self.current_route {
                                 match route {
+                                    AppRoute::Root => html!{<HelloWorld />},
                                     AppRoute::Index => html!{<HelloWorld />},
                                     AppRoute::HelloWorld => html!{<HelloWorld />},
                                     AppRoute::PageNotFound | _ => html!{<PageNotFound />},
