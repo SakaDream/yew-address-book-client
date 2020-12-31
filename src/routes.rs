@@ -2,6 +2,8 @@ use yew_router::prelude::*;
 
 #[derive(Switch, Debug, Clone, PartialEq)]
 pub enum AppRoute {
+    #[to = "/"]
+    Root,
     #[to = "#/"]
     Index,
     #[to = "#/hello-world"]
@@ -20,9 +22,5 @@ pub fn switch(route: &mut Route) -> AppRoute {
     }
 
     let current_route = AppRoute::switch(route.clone());
-    if current_route == Some(AppRoute::Index) && route.route.as_str() != "#/" {
-        AppRoute::PageNotFound
-    } else {
-        current_route.unwrap()
-    }
+    current_route.unwrap()
 }
