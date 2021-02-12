@@ -20,7 +20,7 @@ yew = "0.17.4"
 yew-router = "0.14.0"
 
 [dev-dependencies]
-wasm-bindgen-test = "0.3.19"
+wasm-bindgen-test = "0.3.20"
 
 [dependencies.web-sys]
 version = "0.3.47"
