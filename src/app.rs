@@ -1,13 +1,10 @@
 use yew::{agent::Bridged, Bridge, Component, ComponentLink, Html, html};
 use yew_router::prelude::*;
-use crate::{
-    shared::layout::{Header, Footer},
-    pages::{
+use crate::{pages::{
+        dashboard::Dashboard,
         hello_world::HelloWorld,
         page_not_found::PageNotFound,
-    },
-    routes::*,
-};
+    }, routes::{AppRoute, fix_fragment_routes}, shared::layout::{Header, Footer}};
 
 pub struct App {
     #[allow(unused)]
@@ -29,9 +26,10 @@ impl Component for App {
         let router_agent = RouteAgent::bridge(link.callback(Msg::UpdateRoute));
         let route_service: RouteService = RouteService::new();
         let mut route = route_service.get_route();
+        fix_fragment_routes(&mut route);
         App {
             link,
-            current_route: Some(switch(&mut route)),
+            current_route: AppRoute::switch(route),
             router_agent,
         }
     }
@@ -39,7 +37,8 @@ impl Component for App {
     fn update(&mut self, msg: Self::Message) -> bool {
         match msg {
             Msg::UpdateRoute(mut route) => {
-                self.current_route = Some(switch(&mut route))
+                fix_fragment_routes(&mut route);
+                self.current_route = AppRoute::switch(route);
             }
         }
         true
@@ -52,15 +51,17 @@ impl Component for App {
     fn view(&self) -> Html {
         html! {
             <>
-                <Header />
+                <Header current_route={&self.current_route}/>
                 <main class="flex-shrink-0 mt-3">
                     <div class="container-fluid">
                         {
                             if let Some(route) = &self.current_route {
+                                log::info!("{:#?}", self.current_route);
                                 match route {
-                                    AppRoute::Root => html!{<HelloWorld />},
                                     AppRoute::Index => html!{<HelloWorld />},
+                                    AppRoute::Home => html!{<HelloWorld />},
                                     AppRoute::HelloWorld => html!{<HelloWorld />},
+                                    AppRoute::Dashboard => html!{<Dashboard />},
                                     AppRoute::PageNotFound | _ => html!{<PageNotFound />},
                                 }
                             } else {
