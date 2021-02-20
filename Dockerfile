@@ -20,7 +20,7 @@ RUN yarn install \
     && rm static/*.*
 
 # expose port
-EXPOSE 8000
+EXPOSE 3000
 
 # run the server
-ENTRYPOINT ["python3", "-m", "http.server", "-d", "dist", "8000"]
+ENTRYPOINT ["python3", "-m", "http.server", "-d", "dist", "3000"]

@@ -17,13 +17,13 @@ Or using [Docker](https://www.docker.com)
 - Install Node dependencies: `yarn install`
 - Build: `yarn run build`
 - Run: `yarn run start:dev`
-- Go to http://localhost:8000 (Windows) or http://127.0.0.1:8000 (Linux/macOS) and enjoy! 😄
+- Go to http://localhost:3000 (Windows) or http://127.0.0.1:3000 (Linux/macOS) and enjoy! 😄
 
 ### Docker
 
 - Build: `docker build -t address-book .`
-- Run: `docker run -p 8000 -d address-book`
-- Go to http://localhost:8000 (Windows) or http://127.0.0.1:8000 (Linux/macOS) and enjoy! 😄
+- Run: `docker run -p 3000 -d address-book`
+- Go to http://localhost:3000 (Windows) or http://127.0.0.1:3000 (Linux/macOS) and enjoy! 😄
 
 ## Run with backend API
 - This project uses **actix-web-rest-api-with-jwt** for backend-side, go to https://github.com/SakaDream/actix-web-rest-api-with-jwt for more details.
