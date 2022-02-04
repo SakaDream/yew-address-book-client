@@ -1,5 +1,6 @@
 use yew::{Component, ComponentLink, Html, html};
-use crate::pages::hello_world::HelloWorld;
+
+pub struct HelloWorld {}
 
 impl Component for HelloWorld {
     type Message = ();

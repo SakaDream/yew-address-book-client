@@ -4,27 +4,30 @@ version = "0.1.0"
 authors = ["Hai Phan <bahaimt@gmail.com>"]
 edition = "2018"
 
+[build]
+target = "wasm32-unknown-unknown"
+
 [lib]
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 log = "0.4.14"
-strum = "0.20.0"
-strum_macros = "0.20.1"
-serde = "1.0.123"
-serde_derive = "1.0.123"
-wasm-bindgen = "0.2.70"
+strum = "0.22.0"
+strum_macros = "0.22.0"
+serde = "1.0.130"
+serde_derive = "1.0.130"
+wasm-bindgen = "0.2.78"
 wasm-logger = "0.2.0"
 wee_alloc = { version = "0.4.5", optional = true }
-yew = "0.17.4"
-yew-router = "0.14.0"
-anyhow = "1.0.38"
+yew = "0.18.0"
+yew-router = "0.15.0"
+anyhow = "1.0.45"
 
 [dev-dependencies]
-wasm-bindgen-test = "0.3.20"
+wasm-bindgen-test = "0.3.28"
 
 [dependencies.web-sys]
-version = "0.3.47"
+version = "0.3.55"
 features = [
   'KeyboardEvent',
 ]

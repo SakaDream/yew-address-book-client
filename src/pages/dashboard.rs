@@ -7,7 +7,13 @@ use yew::services::fetch::{FetchService, FetchTask, Request, Response};
 
 use crate::shared::model::{Person, ResponseBody};
 
-use super::Dashboard;
+pub struct Dashboard {
+    link: ComponentLink<Self>,
+    has_error: bool,
+    fetching: bool,
+    response: ResponseBody<Vec<Person>>,
+    ft: Option<FetchTask>,
+}
 
 pub enum Msg {
     FetchData,

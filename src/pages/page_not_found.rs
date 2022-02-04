@@ -1,9 +1,8 @@
 use yew::{Component, ComponentLink, Html, html};
 use yew_router::prelude::*;
-use crate::{
-    pages::page_not_found::PageNotFound,
-    routes::AppRoute,
-};
+use crate::routes::AppRoute;
+
+pub struct PageNotFound {}
 
 impl Component for PageNotFound {
     type Message = ();
