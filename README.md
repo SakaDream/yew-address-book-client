@@ -16,13 +16,13 @@ Or using [Docker](https://www.docker.com)
 
 - Install Node dependencies: `yarn install`
 - Build: `yarn run build`
-- Run: `yarn run start:dev`
+- Run: `yarn run start-server`
 - Go to http://localhost:3000 (Windows) or http://127.0.0.1:3000 (Linux/macOS) and enjoy! 😄
 
 ### Docker
 
-- Build: `docker build -t address-book .`
-- Run: `docker run -p 3000 -d address-book`
+- Build: `docker build -t yew-address-book-client .`
+- Run: `docker run -p 3000:3000 -d yew-address-book-client`
 - Go to http://localhost:3000 (Windows) or http://127.0.0.1:3000 (Linux/macOS) and enjoy! 😄
 
 ## Run with backend API
@@ -34,7 +34,7 @@ Or using [Docker](https://www.docker.com)
 - [x] Routing
 - [x] Dashboard UI
 - [x] Add mock data and fetch get all items from backend
-- [ ] App config
+- [x] App config
 - [ ] Signup, Login
 - [ ] Add item UI and logic
 - [ ] Update item UI and logic
