@@ -14,8 +14,9 @@ Or using [Docker](https://www.docker.com)
 
 ### Manual
 
-- Install Node dependencies: `yarn install`
-- Build: `yarn run build`
+- Install Node dependencies for client: `yarn install`
+- Install Node dependencies for server: `cd /server && yarn install`
+- Build: `cd .. && yarn run build`
 - Run: `yarn run start-server`
 - Go to http://localhost:3000 (Windows) or http://127.0.0.1:3000 (Linux/macOS) and enjoy! 😄
 
