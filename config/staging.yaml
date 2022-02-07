@@ -1,0 +1,8 @@
+app:
+  name: address-book-stg
+  port: 3000
+api:
+  backend:
+    host: address-book-api-stg
+    port: 8000
+    path: api

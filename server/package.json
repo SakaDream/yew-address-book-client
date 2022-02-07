@@ -1,0 +1,18 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Node Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "SakaDream",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.2",
+    "http-proxy-middleware": "^2.0.2",
+    "morgan": "^1.10.0",
+    "config": "^3.3.7",
+    "js-yaml": "^4.1.0"
+  }
+}
