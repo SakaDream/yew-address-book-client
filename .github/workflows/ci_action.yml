@@ -12,6 +12,8 @@ jobs:
 
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
+        with:
+          target: wasm32-unknown-unknown
 
       - name: Install trunk-cli
         run: "cargo install trunk"
@@ -73,6 +75,8 @@ jobs:
 
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
+        with:
+          target: wasm32-unknown-unknown
 
       - name: Install trunk-cli
         run: "cargo install trunk"
@@ -134,6 +138,8 @@ jobs:
 
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
+        with:
+          target: wasm32-unknown-unknown
 
       - name: Install trunk-cli
         run: "cargo install trunk"
