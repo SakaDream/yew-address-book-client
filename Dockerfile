@@ -1,19 +1,27 @@
 # base image
-FROM sakadream/rust-wasm as build
+FROM ghcr.io/sakadream/rust-wasm-docker-image:master as build
+WORKDIR /app
 
 # copy project files
 COPY ./src ./src
+COPY ./server ./server
+COPY ./config ./config
 COPY ./static ./static
 COPY ./tests ./tests
+COPY ./index.html .
 COPY ./.cargo-ok .
-COPY ./bootstrap.js .
 COPY ./Cargo.toml .
 COPY ./package.json .
-COPY ./webpack.config.js .
-COPY ./yarn.lock .
+COPY ./trunk.toml .
 
-# build this project to cache dependencies
+# Build node server
+WORKDIR /app/server
+RUN yarn install
+
+# build client app
+WORKDIR /app
 RUN yarn install \
+    && yarn global add nodemon \
     && yarn run build \
     && rm src/*.rs \
     && rm tests/*.rs \
@@ -23,4 +31,4 @@ RUN yarn install \
 EXPOSE 3000
 
 # run the server
-ENTRYPOINT ["python3", "-m", "http.server", "-d", "dist", "3000"]
+ENTRYPOINT ["yarn", "run", "start-server"]

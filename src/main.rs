@@ -2,10 +2,10 @@
 
 mod app;
 mod shared;
-mod pages;
+mod components;
 mod routes;
 
-use wasm_bindgen::prelude::*;
+use std::panic;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -13,10 +13,8 @@ use wasm_bindgen::prelude::*;
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
-// This is the entry point for the web app
-#[wasm_bindgen]
-pub fn run_app() -> Result<(), JsValue> {
+fn main() {
     wasm_logger::init(wasm_logger::Config::default());
+    panic::set_hook(Box::new(console_error_panic_hook::hook));
     yew::start_app::<app::App>();
-    Ok(())
 }
