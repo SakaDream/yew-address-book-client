@@ -9,7 +9,7 @@
   "author": "SakaDream",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.2",
+    "express": "^4.18.2",
     "http-proxy-middleware": "^2.0.2",
     "morgan": "^1.10.0",
     "config": "^3.3.7",
