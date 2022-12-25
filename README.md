@@ -41,3 +41,4 @@ Or using [Docker](https://www.docker.com)
 - [ ] Update item UI and logic
 - [ ] Delete item UI and logic
 - [ ] Account profile UI and logic
+- [ ] Add localization using [Fluent-rs](https://crates.io/crates/fluent)
