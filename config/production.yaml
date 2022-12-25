@@ -1,8 +1,15 @@
 app:
   name: address-book-prod
   port: 3000
+  max-age: 604800
 api:
   backend:
     host: address-book-api-prod
     port: 8000
     path: api
+db:
+  host: address-book-db-prod
+  port: 5432
+  name: address_book_db
+  username: postgres
+  password: postgres

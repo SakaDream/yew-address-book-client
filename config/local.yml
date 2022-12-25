@@ -1,14 +1,14 @@
 app:
-  name: address-book-stg
+  name: address-book-local
   port: 3000
   max-age: 604800
 api:
   backend:
-    host: address-book-api-stg
+    host: 127.0.0.1
     port: 8000
     path: api
 db:
-  host: address-book-db-stg
+  host: 127.0.0.1
   port: 5432
   name: address_book_db
   username: postgres

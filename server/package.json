@@ -9,10 +9,17 @@
   "author": "SakaDream",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.2",
-    "http-proxy-middleware": "^2.0.2",
-    "morgan": "^1.10.0",
+    "axios": "^1.2.1",
+    "body-parser": "^1.20.1",
     "config": "^3.3.7",
-    "js-yaml": "^4.1.0"
+    "connect-pg-simple": "^7.0.0",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.17.2",
+    "express-session": "^1.17.2",
+    "http-proxy-middleware": "^2.0.2",
+    "js-yaml": "^4.1.0",
+    "morgan": "^1.10.0",
+    "passport": "^0.6.0",
+    "pg": "^8.7.3"
   }
 }
