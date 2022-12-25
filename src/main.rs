@@ -1,11 +1,14 @@
-#![recursion_limit="1024"]
+#![recursion_limit = "1024"]
 
 mod app;
-mod shared;
-mod components;
+mod error;
+mod modules;
 mod routes;
+mod shared;
 
 use std::panic;
+
+use app::App;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -16,5 +19,5 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 fn main() {
     wasm_logger::init(wasm_logger::Config::default());
     panic::set_hook(Box::new(console_error_panic_hook::hook));
-    yew::start_app::<app::App>();
+    yew::Renderer::<App>::new().render();
 }

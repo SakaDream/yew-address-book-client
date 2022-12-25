@@ -1,5 +1,5 @@
-$background: #f5f5f5;
+@use './common/color';
 
 body {
-  background: $background;
+  background: color.$white;
 }

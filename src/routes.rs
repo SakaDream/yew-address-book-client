@@ -11,6 +11,12 @@ pub enum AppRoute {
     HelloWorld,
     #[at("/dashboard")]
     Dashboard,
+    #[at("/login")]
+    Login,
+    #[at("/signup")]
+    Signup,
+    #[at("/logout")]
+    Logout,
     #[not_found]
     #[at("/page-not-found")]
     PageNotFound,
@@ -23,6 +29,9 @@ impl AppRoute {
             AppRoute::Home => "Home",
             AppRoute::HelloWorld => "Hello World",
             AppRoute::Dashboard => "Dashboard",
+            AppRoute::Login => "Login",
+            AppRoute::Signup => "Signup",
+            AppRoute::Logout => "Logout",
             AppRoute::PageNotFound => "Page Not Found",
         }
     }

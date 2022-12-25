@@ -1,6 +1,6 @@
+use crate::routes::AppRoute;
 use yew::prelude::*;
 use yew_router::components::Link;
-use crate::routes::AppRoute;
 
 #[function_component(PageNotFound)]
 pub fn page_not_found() -> Html {

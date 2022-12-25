@@ -1,5 +1,4 @@
-use reqwasm::http::Request;
-use weblog::console_log;
+use gloo_net::http::Request;
 use yew::prelude::*;
 use yew_hooks::{use_async, use_latest};
 
@@ -22,13 +21,19 @@ async fn fetch_data(
             }],
         ))
     } else {
-        let resp = Request::get("/api/address-book").send().await;
+        let resp = Request::get("/api/address-book")
+            .credentials(web_sys::RequestCredentials::Include)
+            .send()
+            .await
+            .unwrap();
 
-        console_log!(format!("{:#?}", resp));
-        match resp {
-            Ok(r) => return Ok(r.json::<ResponseBody<Vec<Person>>>().await.unwrap()),
-            Err(e) => return Err(ResponseBody::new("Error", e.to_string())),
+        if resp.ok() {
+            return Ok(resp
+                .json::<ResponseBody<Vec<Person>>>()
+                .await
+                .map_err(|e| ResponseBody::new(&format!("{:?}", e).to_string(), "".to_string())))?;
         }
+        return Err(resp.json::<ResponseBody<String>>().await.unwrap());
     }
 }
 
@@ -86,13 +91,7 @@ pub fn dashboard() -> Html {
                             </div>
                         </div>
                     }
-                } else {
-                    html!{}
-                }
-            }
-
-            {
-                if let Some(data) = &state.data {
+                } else if let Some(data) = &state.data {
                     html! {
                         <table class="table" disabled={state.loading}>
                             { table_header }
@@ -113,6 +112,8 @@ pub fn dashboard() -> Html {
                             </tbody>
                         </table>
                     }
+                } else if let Some(error) = &state.error {
+                    html! { <p>{ format!("Error: {}", error.message) }</p> }
                 } else {
                     html! {
                         <table class="table" disabled={state.loading}>
@@ -122,15 +123,6 @@ pub fn dashboard() -> Html {
                     }
                 }
             }
-
-            {
-                if let Some(error) = &state.error {
-                    html! { <p>{ format!("Error: {}", error.message) }</p> }
-                } else {
-                    html! {}
-                }
-            }
-
             <div class="btn-toolbar">
                 <button type="button" class="btn btn-primary m-1" disabled={state.loading} onclick={on_fetch_api_click}>{ "Show data from Rest API" }</button>
                 <button type="button" class="btn btn-primary m-1" disabled={state.loading} onclick={on_fetch_mock_click}>{ "Show data from Mock" }</button>

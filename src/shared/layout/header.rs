@@ -1,5 +1,4 @@
 use strum::IntoEnumIterator;
-use weblog::console_log;
 use yew::prelude::*;
 use yew_router::components::Link;
 use yew_router::hooks::use_route;
@@ -13,21 +12,22 @@ pub fn header() -> Html {
 
     let mut links = vec![];
     for app_route in AppRoute::iter() {
-        let mut classes = String::from("nav-link");
+        if (app_route.as_str() != AppRoute::Login.as_str())
+            & (app_route.as_str() != AppRoute::Signup.as_str())
+        {
+            let mut classes = String::from("nav-link");
 
-        console_log!("route", route.as_str());
-        console_log!("app_route", app_route.as_str());
+            if route.as_str() == app_route.as_str() {
+                classes.push_str(" active");
+            }
+            let app_route_clone = app_route.clone();
 
-        if route.as_str() == app_route.as_str() {
-            classes.push_str(" active");
+            links.push(html! {
+                <li class="nav-item">
+                    <Link<AppRoute> to={app_route} classes={classes!(classes)} >{ app_route_clone.as_str() }</Link<AppRoute>>
+                </li>
+            });
         }
-        let app_route_clone = app_route.clone();
-
-        links.push(html! {
-            <li class="nav-item">
-                <Link<AppRoute> to={app_route} classes={classes!(classes)} >{ app_route_clone.as_str() }</Link<AppRoute>>
-            </li>
-        });
     }
 
     html! {
