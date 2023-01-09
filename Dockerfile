@@ -22,7 +22,7 @@ RUN yarn install
 WORKDIR /app
 RUN yarn install \
     && yarn global add nodemon \
-    && yarn run build \
+    && yarn run build-release \
     && rm src/*.rs \
     && rm tests/*.rs \
     && rm static/*.*
@@ -31,4 +31,4 @@ RUN yarn install \
 EXPOSE 3000
 
 # run the server
-ENTRYPOINT ["yarn", "run", "start-server"]
+ENTRYPOINT ["yarn", "run", "start-server-local"]

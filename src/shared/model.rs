@@ -60,6 +60,13 @@ pub struct User {
     pub login_session: String,
 }
 
+#[derive(Deserialize, Serialize, Default, Debug, Clone)]
+pub struct UserDTO {
+    pub username: String,
+    pub email: String,
+    pub password: String,
+}
+
 #[derive(Deserialize, Debug, Clone)]
 pub struct Person {
     pub id: i32,
@@ -71,7 +78,7 @@ pub struct Person {
     pub email: String,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Default, Debug, Clone)]
 pub struct LoginDTO {
     pub username_or_email: String,
     pub password: String,

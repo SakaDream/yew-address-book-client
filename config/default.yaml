@@ -4,12 +4,12 @@ app:
   max-age: 604800
 api:
   backend:
-    host: 127.0.0.1
+    host: address-book-api-local
     port: 8000
     path: api
 db:
-  host: 127.0.0.1
+  host: address-book-db-local
   port: 5432
-  name: address_book_db
+  name: postgres
   username: postgres
   password: postgres

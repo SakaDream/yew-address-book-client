@@ -8,26 +8,24 @@ const config = require('config');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const bodyParser = require('body-parser');
 const { default: axios } = require('axios');
-const { resolve } = require('path');
-const { rejects } = require('assert');
 
 const routes = require('./routes');
 
-const secret = (config.has('app.cookie.secret')) ? config.get('app.cookie.secret') : process.env.APP_COOKIE_SECRET || require("crypto").randomBytes(16).toString("hex");
-const port = (config.has('app.port')) ? config.get('app.port') : process.env.APP_PORT || 3000;
-const maxAge = (config.has('app.max-age')) ? config.get('app.max-age') : process.env.APP_MAX_AGE || 60 * 60 * 24 * 7;
+const secret = (process.env.APP_COOKIE_SECRET) ? process.env.APP_COOKIE_SECRET : (config.has('app.cookie.secret')) ? config.get('app.cookie.secret') : require("crypto").randomBytes(16).toString("hex");
+const port = (process.env.APP_PORT) ? process.env.APP_PORT : (config.has('app.port')) ? config.get('app.port') : 3000;
+const maxAge = (process.env.APP_MAX_AGE) ? process.env.APP_MAX_AGE : (config.has('app.max-age')) ? config.get('app.max-age') : 60 * 60 * 24 * 7;
 
-const apiBackendHost = (config.has('api.backend.host')) ? config.get('api.backend.host') : process.env.API_BACKEND_HOST;
-const apiBackendPort = (config.has('api.backend.port')) ? config.get('api.backend.port') : process.env.API_BACKEND_PORT;
-const apiBackendPath = (config.has('api.backend.path')) ? config.get('api.backend.path') : process.env.API_BACKEND_PATH;
+const apiBackendHost = (process.env.API_BACKEND_HOST) ? process.env.API_BACKEND_HOST : (config.has('api.backend.host')) ? config.get('api.backend.host') : '';
+const apiBackendPort = (process.env.API_BACKEND_PORT) ? process.env.API_BACKEND_PORT : (config.has('api.backend.port')) ? config.get('api.backend.port') : '';
+const apiBackendPath = (process.env.API_BACKEND_PATH) ? process.env.API_BACKEND_PATH : (config.has('api.backend.path')) ? config.get('api.backend.path') : '';
 
 const api = `http://${apiBackendHost}:${apiBackendPort}/${apiBackendPath}`;
 
-const dbHost = (config.has('db.host')) ? config.get('db.host') : process.env.DB_HOST;
-const dbPort = (config.has('db.port')) ? config.get('db.port') : process.env.DB_PORT;
-const dbName = (config.has('db.name')) ? config.get('db.name') : process.env.DB_NAME;
-const dbUsername = (config.has('db.username')) ? config.get('db.username') : process.env.DB_USERNAME;
-const dbPassword = (config.has('db.password')) ? config.get('db.password') : process.env.DB_PASSWORD;
+const dbHost = (process.env.DB_HOST) ? process.env.DB_HOST : (config.has('db.host')) ? config.get('db.host') : '';
+const dbPort = (process.env.DB_PORT) ? process.env.DB_PORT : (config.has('db.port')) ? config.get('db.port') : '';
+const dbName = (process.env.DB_NAME) ? process.env.DB_NAME : (config.has('db.name')) ? config.get('db.name') : '';
+const dbUsername = (process.env.DB_USERNAME) ? process.env.DB_USERNAME : (config.has('db.username')) ? config.get('db.username') : '';
+const dbPassword = (process.env.DB_PASSWORD) ? process.env.DB_PASSWORD : (config.has('db.password')) ? config.get('db.password') : '';
 
 const pgPool = new pg.Pool({
     host: dbHost,
@@ -37,29 +35,42 @@ const pgPool = new pg.Pool({
     password: dbPassword,
 });
 
+// Proxy backend api
+const options = {
+    target: `${api}`,
+    changeOrigin: true,
+    pathRewrite: {
+        [`^/api`]: '',
+    },
+    onProxyReq(proxyReq, req) {
+        let tokenType = 'bearer';
+        let token = '';
+        if (req.session) {
+            if (req.session['token_type']) {
+                tokenType = req.session['token_type'];
+            }
+            if (req.session.token) {
+                token = req.session.token;
+            }
+        }
+        proxyReq.setHeader('Authorization', `${tokenType} ${token}`);
+    }
+  };
+const apiProxy = createProxyMiddleware('/api', options);
+app.use(apiProxy);
+
 app.use(morgan('dev'));
 app.use(bodyParser.json({ type: 'application/json' }));
 app.use(session({
     store: new (require('connect-pg-simple')(session))({
         pool: pgPool,
+        createTableIfMissing: true,
     }),
     secret: secret,
     resave: false,
     cookie: {
         httpOnly: true,
         maxAge: maxAge
-    }
-}));
-
-// Proxy backend api
-app.use('/api', createProxyMiddleware({
-    target: `${api}`,
-    changeOrigin: true,
-    pathRewrite: {
-        [`^/api`]: '',
-    },
-    onProxyReq(proxyReq, req, res) {
-        proxyReq.setHeader('Authorization', `${req.session['token_type'] || ''} ${req.session.token || ''}`);
     }
 }));
 
@@ -92,5 +103,6 @@ app.get('/server/logout', function (req, res, next) {
 });
 
 app.listen(port, () => {
-    console.log(`Server listening on port ${port}`)
+    console.log(`Server listening on port ${port}`);
+    console.log(`Environment: ${process.env.NODE_ENV}`);
 });
